@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Alpha Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div class="container-fluid dashboard-container">
+        <!-- Header Section -->
+        <header class="row header-section">
+            <div class="col-md-4 d-flex align-items-center">
+                <h1 class="dashboard-title">Crypto Alpha Dashboard</h1>
+            </div>
+            <div class="col-md-8 d-flex justify-content-end align-items-center">
+                <div class="last-updated me-3">
+                    Last updated: <span id="update-time">Loading...</span>
+                </div>
+                <button id="refresh-btn" class="btn btn-primary">
+                    <span class="refresh-icon">↻</span> Refresh
+                </button>
+                <div class="theme-toggle ms-3">
+                    <button id="theme-toggle-btn" class="btn btn-outline-secondary btn-sm">
+                        <span id="theme-icon">☀️</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Market Overview Panel -->
+            <section class="dashboard-panel market-overview">
+                <h2 class="panel-title">Market Overview</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="crypto-card" id="bitcoin-card">
+                            <div class="crypto-header">
+                                <img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="Bitcoin" class="crypto-icon">
+                                <h3>Bitcoin</h3>
+                            </div>
+                            <div class="crypto-price">$<span id="btc-price">Loading...</span></div>
+                            <div class="crypto-change" id="btc-change">Loading...</div>
+                            <div class="crypto-chart" id="btc-chart"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="crypto-card" id="ethereum-card">
+                            <div class="crypto-header">
+                                <img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="Ethereum" class="crypto-icon">
+                                <h3>Ethereum</h3>
+                            </div>
+                            <div class="crypto-price">$<span id="eth-price">Loading...</span></div>
+                            <div class="crypto-change" id="eth-change">Loading...</div>
+                            <div class="crypto-chart" id="eth-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="market-stat-card">
+                            <h4>Global Market Cap</h4>
+                            <div class="stat-value" id="global-marketcap">Loading...</div>
+                            <div class="stat-change" id="global-marketcap-change">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="market-stat-card">
+                            <h4>24h Volume</h4>
+                            <div class="stat-value" id="global-volume">Loading...</div>
+                            <div class="stat-change" id="global-volume-change">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="market-stat-card">
+                            <h4>BTC Dominance</h4>
+                            <div class="stat-value" id="btc-dominance">Loading...</div>
+                            <div class="stat-change" id="btc-dominance-change">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="fear-greed-card">
+                            <h4>Fear & Greed Index</h4>
+                            <div id="fear-greed-widget"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Social Insights Panel -->
+            <section class="dashboard-panel social-insights">
+                <h2 class="panel-title">Social Insights</h2>
+                <div class="twitter-feed-container">
+                    <h3>Crypto Twitter</h3>
+                    <div id="twitter-feed" class="twitter-feed">
+                        <!-- Twitter feed will be loaded here -->
+                        <div class="loading-placeholder">Loading Twitter feed...</div>
+                    </div>
+                </div>
+                <div class="influencer-tracker mt-3">
+                    <h3>Influencer Mentions</h3>
+                    <div id="influencer-mentions" class="influencer-mentions">
+                        <!-- Influencer mentions will be loaded here -->
+                        <div class="loading-placeholder">Loading influencer data...</div>
+                    </div>
+                </div>
+                <div class="sentiment-analysis mt-3">
+                    <h3>Token Sentiment</h3>
+                    <div id="sentiment-chart" class="sentiment-chart">
+                        <!-- Sentiment chart will be loaded here -->
+                        <div class="loading-placeholder">Loading sentiment data...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trending Tokens Section -->
+            <section class="dashboard-panel trending-tokens">
+                <h2 class="panel-title">Trending Tokens</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="trending-section">
+                            <h3>Coinbase Trending</h3>
+                            <div id="coinbase-trending" class="token-list">
+                                <!-- Coinbase trending tokens will be loaded here -->
+                                <div class="loading-placeholder">Loading Coinbase data...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="trending-section">
+                            <h3>DEX Trending</h3>
+                            <div id="dex-trending" class="token-list">
+                                <!-- DEX trending tokens will be loaded here -->
+                                <div class="loading-placeholder">Loading DEX data...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="new-listings mt-3">
+                    <h3>New Listings</h3>
+                    <div id="new-listings" class="token-list horizontal-scroll">
+                        <!-- New listings will be loaded here -->
+                        <div class="loading-placeholder">Loading new listings...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DEX Opportunities Section -->
+            <section class="dashboard-panel dex-opportunities">
+                <h2 class="panel-title">DEX Opportunities</h2>
+                <div class="new-pairs">
+                    <h3>New Pairs with Liquidity</h3>
+                    <div id="new-pairs" class="dex-list">
+                        <!-- New pairs will be loaded here -->
+                        <div class="loading-placeholder">Loading new pairs...</div>
+                    </div>
+                </div>
+                <div class="trending-volume mt-3">
+                    <h3>Trending by Volume</h3>
+                    <div id="volume-trending" class="dex-list">
+                        <!-- Volume trending pairs will be loaded here -->
+                        <div class="loading-placeholder">Loading volume data...</div>
+                    </div>
+                </div>
+                <div class="quick-links mt-3">
+                    <h3>Quick Links</h3>
+                    <div class="dex-quick-links">
+                        <a href="https://app.uniswap.org/" target="_blank" class="dex-link">Uniswap</a>
+                        <a href="https://app.sushi.com/swap" target="_blank" class="dex-link">SushiSwap</a>
+                        <a href="https://pancakeswap.finance/" target="_blank" class="dex-link">PancakeSwap</a>
+                        <a href="https://quickswap.exchange/" target="_blank" class="dex-link">QuickSwap</a>
+                        <a href="https://dexscreener.com/" target="_blank" class="dex-link">DexScreener</a>
+                        <a href="https://www.dextools.io/" target="_blank" class="dex-link">DexTools</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Watchlist & Alerts Area -->
+            <section class="dashboard-panel watchlist-alerts">
+                <h2 class="panel-title">Watchlist & Alerts</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="watchlist-container">
+                            <h3>Your Watchlist</h3>
+                            <div id="user-watchlist" class="watchlist">
+                                <!-- User watchlist will be loaded here -->
+                                <div class="watchlist-placeholder">Add tokens to your watchlist</div>
+                            </div>
+                            <div class="watchlist-add mt-2">
+                                <input type="text" id="watchlist-input" class="form-control" placeholder="Enter token symbol">
+                                <button id="watchlist-add-btn" class="btn btn-primary mt-2">Add to Watchlist</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alerts-container">
+                            <h3>Price Alerts</h3>
+                            <div id="price-alerts" class="alerts-list">
+                                <!-- Price alerts will be loaded here -->
+                                <div class="alerts-placeholder">No active alerts</div>
+                            </div>
+                            <div class="alert-add mt-2">
+                                <select id="alert-token" class="form-select mb-2">
+                                    <option value="">Select token</option>
+                                </select>
+                                <div class="input-group mb-2">
+                                    <select id="alert-condition" class="form-select">
+                                        <option value="above">Above</option>
+                                        <option value="below">Below</option>
+                                    </select>
+                                    <input type="number" id="alert-price" class="form-control" placeholder="Price">
+                                </div>
+                                <button id="alert-add-btn" class="btn btn-primary">Set Alert</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Crypto Alpha Dashboard | Data powered by CoinGecko, TradingView, and DexScreener</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p>Disclaimer: This dashboard is for informational purposes only. Not financial advice.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://widgets.coingecko.com/coingecko-coin-price-chart-widget.js"></script>
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <script src="https://platform.twitter.com/widgets.js"></script>
+    <script src="app.js"></script>
+    <script src="social_monitoring.js"></script>
+    <script src="dex_coinbase_tracking.js"></script>
+    <script src="integration.js"></script>
+    <script src="test_optimize.js"></script>
+</body>
+</html>
